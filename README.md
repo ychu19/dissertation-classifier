@@ -1,4 +1,4 @@
-# Predicting Citizenship based on Names using Machine Learning
+# Predicting Citizenship based on Names using Machine Learning Models
 
 ## Table of Contents
 
