@@ -1,6 +1,6 @@
 # Classifying Countries of Origins among Naturalized Citizens
 ----
-Table of Contents
+## Table of Contents
 - [Classifying Countries of Origins among Naturalized Citizens](#classifying-countries-of-origins-among-naturalized-citizens)
   * [Purpose](#purpose)
   * [Data Source](#data-source)
