@@ -43,7 +43,7 @@ Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954
 
 ## Data Cleaning
 
-1. Created y: Coded Koreans (朝鮮) as 1, Chinese (無国籍 or 中華民国) as 2, and others as 0
+1. Created y: Coded Koreans (朝鮮<sup>3</sup>) as 1, Chinese (無国籍<sup>4</sup> or 中華民国<sup>5</sup>) as 2, and others as 0
 ```python
 def nationality(string):
   """Get a string from the archival data, 
@@ -56,6 +56,7 @@ def nationality(string):
     nationality = 2
   return nationality
 ```
+
 2. Created X
     1. Created a column with numbers of "betsumes" each individual has (numbers of non-NAs in column `betsume.1`, `betsume.2`, `betsume.3`)
     ```python
@@ -104,6 +105,12 @@ def nationality(string):
     ```python
     data['first_name_cross'] = data['kr_first_name'] * data['ch_first_name']
     ```
+[3]: "Chosun" in Japanese, broadly referring to people who came from the Korean Penisula regardless of affiliation with the North or South.
+
+[4]: "Stateless" in Japanese. Most of the Chinese citizens were required to renounce their original citizenship before applying for naturalization, thus became stateless.
+
+[5]: "Repubic of China" in Japanese. The official name for the government now in Taiwan. Before Japan recognized the Chinese Communist Party as the legitimate government of China in 1972, all Chinese citizens were subjects of the Republic of China. See [Wiki](https://en.wikipedia.org/wiki/Japan%E2%80%93China_Joint_Communiqu%C3%A9)
+
 
 ## Data Pre-processing
 
@@ -142,6 +149,7 @@ X = adjusted_sample[features]
 ```python
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1) # train data and validation data
 ```
+
 ## Build Models
 
 Usking `sklearn`, I built the following models:
