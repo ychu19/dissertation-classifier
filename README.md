@@ -1,5 +1,5 @@
 # Classifying Countries of Origins among Naturalized Citizens
-----
+
 ## Table of Contents
 
   * [Purpose](#purpose)
@@ -13,7 +13,7 @@
   * [Conclusion](#conclusion)
   * [Future Steps](#future-steps)
 
---
+
 ## Purpose
 
 My dissertation project seeks to explain why permanent immigrants in Japan refused to acquire Japanese citizenship even when they were born and raised there <sup>1</sup>. I hypothesize that their home country attachment through diasporic organizations affects their propensity to naturalize.
