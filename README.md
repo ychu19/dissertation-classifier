@@ -161,12 +161,12 @@ rf_model_on_train_data.fit(X, y)
 
 ```python
 test_preds = rf_model_on_full_data.predict_proba(test_X)
-
+threshold = 0.85
 test_y_pred = [test_preds[i][0]>=threshold for i in range(len(test_preds))]
 test_y_pred = pd.Series(test_y_pred).astype(int)
 test_accuracy = accuracy_score(test_y, test_y_pred)
 ```
-Accuracy score in test data is 0.7957.
+Accuracy score in test data is 0.7957. 
 
 ## Conclusion
 
