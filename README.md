@@ -109,7 +109,7 @@ def nationality(string):
 
 [4]: "Stateless" in Japanese. Most of the Chinese citizens were required to renounce their original citizenship before applying for naturalization, thus became stateless.
 
-[5]: "Repubic of China" in Japanese. The official name for the government now in Taiwan. Before Japan recognized the Chinese Communist Party as the legitimate government of China in 1972, all Chinese citizens were subjects of the Republic of China. See [Wiki](https://en.wikipedia.org/wiki/Japan%E2%80%93China_Joint_Communiqu%C3%A9)
+[5]: "Repubic of China" in Japanese. The official name for the government now in Taiwan. Before Japan recognized the Chinese Communist Party as the legitimate government of China in 1972, all Chinese citizens were subjects of the Republic of China. See [Wikipedia](https://en.wikipedia.org/wiki/Japan%E2%80%93China_Joint_Communiqu%C3%A9)
 
 
 ## Data Pre-processing
