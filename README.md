@@ -30,20 +30,139 @@ Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954
 ## Data Cleaning
 
 1. Created y: Coded Koreans (朝鮮) as 1, Chinese (無国籍 or 中華民国) as 2, and others as 0
+```python
+def nationality(string):
+  """Get a string from the archival data, 
+     Return whether an individual is of (1) Korean, (2) Chinese, 
+     or (0) Other national origin"""
+  nationality = 0 # default set as others
+  if string == '朝鮮':
+    nationality = 1
+  elif string in ['無国籍','中華民国']:
+    nationality = 2
+  return nationality
+```
 2. Created X
     1. Created a column with numbers of "betsumes" each individual has (numbers of non-NAs in column `betsume.1`, `betsume.2`, `betsume.3`)
+    ```python
+    def betsume_numbers(betsume1, betsume2, betsume3):
+       """calculate the numbers of betsume regardless of the column sequence"""
+       b1 = pd.notna(betsume1)
+       b2 = pd.notna(betsume2)
+       b3 = pd.notna(betsume3) # python calculates Bloolean as integers 
+       return (b1+b2+b3)
+    ```
     2. Created one-hot encoding columns `kr_last_name` and `ch_last_name` if the individual's last name matches top 100 common last names in Korea and China
+    ```python
+    data['kr_last_name'] = data['last.name'].isin(kr_last_names).astype(int)
+    data['ch_last_name'] = data['last.name'].isin(ch_last_names).astype(int)
+    ```
     3. Crossed the features `kr_last_name` and `ch_last_name` for the overlapping last names (like Lee(李) or Kim(金))
+    ```python
+    data['last_name_cross'] = data['kr_last_name'] * data['ch_last_name']
+    ```
     4. Created one-hot encoding columns `kr_first_name` and `ch_first_name` if the indvidiaul's first name (either characters) matches the most common first names in Korea and China in the history
+    ```python
+    name_list = ch_first_names.str.cat()
+    def name_in_list(name):
+        """input: name
+           output: whether name is a member of our list
+           function also deal with NA values + ""
+        """
+        if pd.notna(name) and len(name) > 0:
+          return name in name_list
+        else:
+          return False
+    ```
+    ```python
+    name_list = kr_first_names.str.cat()
+    def name_in_list(name):
+        """input: name
+           output: whether name is a member of our list
+           function also deal with NA values + ""
+        """
+        if pd.notna(name) and len(name) > 0:
+          return name in name_list
+        else:
+          return False
+    ```
     5. Crossed the features `kr_first_name` and `ch_first_name` for the overlapping words in first names (like 蘭 and 英)
+    ```python
+    data['first_name_cross'] = data['kr_first_name'] * data['ch_first_name']
+    ```
 
 ## Data Pre-processing
 
 1. Combined the data from 1954 and 1955
+```python
+frames = [data_1954, data_1955]
+data = pd.concat(frames).reset_index(drop=True)
+```
 2. Shuffled the rows and set aside 25% of the samples as test set
+```python
+data = data.reindex(np.random.permutation(data.index)) # shuffle the rows
+train_set = data.sample(frac=0.75, random_state=0)
+test_set = data.drop(train_set.index)
+```
 3. Since the data is moderately imbalanced (with around 5,000 Koreans and 250 Chinese), downsampled the Koreans in the training set to 65%
-4. Split the training set into training and validation sets 
+```python
+target_chinese_sample_size = len(train_set[train_set['citizenship']==2]) 
+target_chinese_sample_ratio = 0.35
+adjusted_sample_total = int(target_chinese_sample_size/target_chinese_sample_ratio)
 
+target_korean_sample_size = adjusted_sample_total - target_chinese_sample_size
+
+adjusted_sample_koreans = train_set[train_set['citizenship']==1].sample(
+    n=target_korean_sample_size, 
+    random_state=0)
+adjusted_sample_chinese = train_set[train_set['citizenship']==2]
+
+frames = [adjusted_sample_koreans, adjusted_sample_chinese]
+adjusted_sample = pd.concat(frames)
+adjusted_sample = adjusted_sample.reindex(np.random.permutation(adjusted_sample.index)) # shuffle the rows
+
+y = adjusted_sample.citizenship
+X = adjusted_sample[features]
+```
+4. Split the training set into training and validation sets 
+```python
+train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=1) # train data and validation data
+```
 ## Build Models
 
+Usking `sklearn`, I built the following models:
+1. DecisionTreeClassifier
+2. RandomForestClassifier
 
+### Cross-validation with `sklearn.model_selection`
+```python
+cv = cross_validate(rf_model_on_full_data, X, y, cv=10)
+```
+With a mean precision score of 0.6614
+
+### Use Both Training and Validation Sets to Train the Model
+```python
+rf_model_on_train_data = RandomForestClassifier(random_state = 1,class_weight={1:5,2:1})
+rf_model_on_train_data.fit(X, y)
+```
+
+## Run the Model on Test Data to Predict Citizenship
+
+```python
+test_preds = rf_model_on_full_data.predict_proba(test_X)
+
+test_y_pred = [test_preds[i][0]>=threshold for i in range(len(test_preds))]
+test_y_pred = pd.Series(test_y_pred).astype(int)
+test_accuracy = accuracy_score(test_y, test_y_pred)
+```
+Accuracy score in test data is 0.7957.
+
+## Conclusion
+
+With features of first names, last names, and names used before naturalization (betsume), I was able to predict countries of origin among naturalized individuals in Japan. 
+
+## Future Steps
+
+1. Build and test more models (such as `BaggingClassifier`, `GradientBoostingClassifier`, `AdaBoostClassifier`, etc.
+2. Find optimal parameters across all models and compare across models 
+3. Use the best model to predict countries of origin for naturalized individuals between 1971 and 1980
