@@ -1,4 +1,4 @@
-# Classifying Countries of Origins among Naturalized Citizens
+# Predicting Citizenship based on Names using Machine Learning
 
 ## Table of Contents
 
