@@ -1,7 +1,6 @@
 # Classifying Countries of Origins among Naturalized Citizens
 ----
 
-
 {:toc}
 --
 ## Purpose
@@ -18,7 +17,7 @@ This document presents a smaller project within my dissertation - **classifying 
 
 ## Data Source
 
-Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954 and 1955, with a total of 5,034 individuals who naturailzed. 
+Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954 and 1955, with a total of 5,034 individuals who naturailzed. (Personally identifiable items have been anonymized here)
 
 |    | full_name     | citizenship   | address_anonym   | birthdate                |   household |   date_approval | betsume.1   |   betsume.2 |   betsume.3 |
 |---:|:---------:|:--------------:|:-----------------:|:-------------------------:|------------:|----------------:|:------------:|:------------:|:------------:|
@@ -27,3 +26,24 @@ Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954
 |  2 | ＊本万＊  | 朝鮮          | 高知県           | 明治四十二年七月七日生   |           3 |        19540105 | ＊万＊      |         nan |         nan |
 |  3 | ＊本又＊  | 朝鮮          | 高知県           | 大正六年三月二十四日生   |           4 |        19540105 | ＊又＊        |         nan |         nan |
 |  4 | ＊本玉＊  | 朝鮮          | 同県同           | 昭和十三年九月二十九日生 |           5 |        19540105 | ＊玉＊        |         nan |         nan |
+
+## Data Cleaning
+
+1. Created y: Coded Koreans (朝鮮) as 1, Chinese (無国籍 or 中華民国) as 2, and others as 0
+2. Created X
+    1. Created a column with numbers of "betsumes" each individual has (numbers of non-NAs in column `betsume.1`, `betsume.2`, `betsume.3`)
+    2. Created one-hot encoding columns `kr_last_name` and `ch_last_name` if the individual's last name matches top 100 common last names in Korea and China
+    3. Crossed the features `kr_last_name` and `ch_last_name` for the overlapping last names (like Lee(李) or Kim(金))
+    4. Created one-hot encoding columns `kr_first_name` and `ch_first_name` if the indvidiaul's first name (either characters) matches the most common first names in Korea and China in the history
+    5. Crossed the features `kr_first_name` and `ch_first_name` for the overlapping words in first names (like 蘭 and 英)
+
+## Data Pre-processing
+
+1. Combined the data from 1954 and 1955
+2. Shuffled the rows and set aside 25% of the samples as test set
+3. Since the data is moderately imbalanced (with around 5,000 Koreans and 250 Chinese), downsampled the Koreans in the training set to 65%
+4. Split the training set into training and validation sets 
+
+## Build Models
+
+
