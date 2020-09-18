@@ -19,3 +19,11 @@ This document presents a smaller project within my dissertation - **classifying 
 ## Data Source
 
 Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)) in 1954 and 1955, with a total of 5,034 individuals who naturailzed. 
+
+|    | full_name     | citizenship   | address_anonym   | birthdate                |   household |   date_approval | betsume.1   |   betsume.2 |   betsume.3 |
+|---:|:---------:|:--------------:|:-----------------:|:-------------------------:|------------:|----------------:|:------------:|:------------:|:------------:|
+|  0 | ＊光＊    | 無国籍        | 東京都           | 大正十四年十二月十一日生 |           1 |        19540105 | nan         |         nan |         nan |
+|  1 | ＊鎮＊    | 朝鮮          | 同県山           | 昭和十四年三月十六日生   |           2 |        19540105 | ＊城正＊      |         nan |         nan |
+|  2 | ＊本万＊  | 朝鮮          | 高知県           | 明治四十二年七月七日生   |           3 |        19540105 | ＊万＊      |         nan |         nan |
+|  3 | ＊本又＊  | 朝鮮          | 高知県           | 大正六年三月二十四日生   |           4 |        19540105 | ＊又＊        |         nan |         nan |
+|  4 | ＊本玉＊  | 朝鮮          | 同県同           | 昭和十三年九月二十九日生 |           5 |        19540105 | ＊玉＊        |         nan |         nan |
