@@ -21,7 +21,7 @@ My dissertation project seeks to explain why permanent immigrants in Japan refus
 I pulled the naturalization records from the Japanese Government Gazette ([官報](https://search.npb.go.jp/kanpou/)), with information about each and every naturalized individuals in Japan since the 1950s. I focus on the time between the 1971 and 1980, with a total of 72,416 individuals who have naturalized.
 
 ![kanpou](https://github.com/ychu19/dissertation-classifier/blob/master/kanpou_example.jpg)
-*Screenshot of Kanpou Image in February 1, 2020*
+*Screenshot of Kanpou Image, February 1, 2020*
 
 This document presents a smaller project within my dissertation - **classifying the country of origin for each naturalized individual**. The information about naturalized citizens from the Gazette includes (a) their names, (b) their names before naturalization <sup>2</sup>, (c) their residential addresses, (d) their dates of birth, and (e) dates of approval. While the Gazette provides a rare and valuable opportunity to look into the individual-level features of naturalized citizens, it does not include information about their countries of origin. Fortunately, the Gazette did include original citizenship for those who naturalized in the 50s. **This project uses the data from 1954 to 1955 as prior to predict the countries of origin for those who naturalized in the 70s.**
 
