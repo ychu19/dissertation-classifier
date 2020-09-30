@@ -7,7 +7,7 @@
   * [Data Cleaning](#data-cleaning)
   * [Data Pre-processing](#data-pre-processing)
   * [Build Models](#build-models)
-    + [Cross-validation with `sklearn.model_selection`](#cross-validation-with-sklearnmodelselection)
+    + [Cross-validation with `sklearn.model_selection`](#crossvalidation-with-sklearnmodelselection)
     + [Use Both Training and Validation Sets to Train the Model](#use-both-training-and-validation-sets-to-train-the-model)
   * [Run the Model on Test Data to Predict Citizenship](#run-the-model-on-test-data-to-predict-citizenship)
   * [Conclusion](#conclusion)
