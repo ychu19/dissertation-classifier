@@ -1,5 +1,7 @@
 # Predicting Citizenship based on Names using Machine Learning Models
 
+As part of my dissertation project, I collected data about naturalized individuals in the 70s in Japan through archival works. This small project uses a Random Forest Classifier to identify the original nationalities of these naturalized citizens based on their names. The data I collected did not have such information, but the Japanese government used to include the origianl citizenship back in the 50s. I use the data from 1954 and 1955 to train the model, and apply the modle on my data in the 70s.
+
 ## Table of Contents
 
   * [Purpose](#purpose)
@@ -7,7 +9,7 @@
   * [Data Cleaning](#data-cleaning)
   * [Data Pre-processing](#data-pre-processing)
   * [Build Models](#build-models)
-    + [Cross-validation with `sklearn.model_selection`](#crossvalidation-with-sklearnmodelselection)
+    + [Cross-validation with `sklearn.model_selection`](#cross-validation-with-sklearnmodelselection)
     + [Use Both Training and Validation Sets to Train the Model](#use-both-training-and-validation-sets-to-train-the-model)
   * [Run the Model on Test Data to Predict Citizenship](#run-the-model-on-test-data-to-predict-citizenship)
   * [Conclusion](#conclusion)
